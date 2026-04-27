@@ -20,15 +20,17 @@ export function SiteFooter() {
 
             <div className="footer-links">
               <p className="eyebrow">Quick links</p>
-              <Link href="/">About us</Link>
-              <Link href="/products">Products</Link>
-              <Link href="/contact">Checkout</Link>
+              <Link href="/">Home</Link>
+              <Link href="/products">Product catalog</Link>
+              <Link href="/contact">Contact and orders</Link>
             </div>
 
             <div className="footer-links">
               <p className="eyebrow">Business contact</p>
-              <p>Bulk and corporate requests are handled through the checkout form for a faster response.</p>
-              <p>hello@hindjal.in</p>
+              <p>Bulk and corporate requests are handled through the contact and order page for a faster response.</p>
+              <a href="mailto:hindjalpatna@gmail.com">
+                hindjalpatna@gmail.com
+              </a>
               <p>Support hours: Mon-Sat, 9:00 AM to 7:00 PM</p>
             </div>
           </div>

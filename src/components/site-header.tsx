@@ -13,6 +13,18 @@ function isActive(pathname: string, href: string) {
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
+function getNavigationLabel(href: string, label: string) {
+  if (href === "/") {
+    return "Home";
+  }
+
+  if (href === "/contact") {
+    return "Contact";
+  }
+
+  return label;
+}
+
 function MenuIcon() {
   return (
     <svg aria-hidden="true" fill="none" viewBox="0 0 24 24" width="18" height="18">
@@ -52,7 +64,7 @@ export function SiteHeader() {
                   data-active={isActive(pathname, item.href) ? "true" : "false"}
                   href={item.href}
                 >
-                  {item.label}
+                  {getNavigationLabel(item.href, item.label)}
                 </Link>
               ))}
             </nav>
@@ -90,7 +102,7 @@ export function SiteHeader() {
                   href={item.href}
                   onClick={() => setMenuOpen(false)}
                 >
-                  {item.label}
+                  {getNavigationLabel(item.href, item.label)}
                 </Link>
               ))}
               <Link className="nav-cta" href="/contact" onClick={() => setMenuOpen(false)}>
@@ -109,7 +121,7 @@ export function SiteHeader() {
             data-active={isActive(pathname, item.href) ? "true" : "false"}
             href={item.href}
           >
-            {item.label}
+            {getNavigationLabel(item.href, item.label)}
           </Link>
         ))}
       </div>
