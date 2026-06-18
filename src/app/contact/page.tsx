@@ -1,6 +1,8 @@
 import { getProducts } from "@/lib/products";
 import { MainApp } from "@/components/main-app";
 
+export const dynamic = "force-dynamic";
+
 type ContactPageProps = {
   searchParams: Promise<{
     product?: string | string[];
