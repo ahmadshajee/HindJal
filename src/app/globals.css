@@ -567,34 +567,6 @@ footer {
   position: relative;
   height: 100%;
   min-height: 48rem;
-  perspective: 900px;
-  transform-style: preserve-3d;
-}
-
-/* Whitelisted fade-in transition on return from reset */
-.thought-scene .bubble-wrapper {
-  transition: opacity 800ms ease-out !important;
-}
-
-/* Whitelisted hardware-accelerated 2D Explode transitions */
-.thought-scene.scene--exploded .bubble-wrapper,
-.thought-scene.scene--resetting .bubble-wrapper {
-  transition: transform 1200ms cubic-bezier(0.16, 1, 0.3, 1), 
-              opacity 1200ms cubic-bezier(0.16, 1, 0.3, 1) !important;
-  animation: none !important;
-  will-change: transform, opacity;
-}
-
-.thought-scene.scene--exploded .bubble-wrapper {
-  transform: translate(var(--explode-tx), var(--explode-ty)) scale(1.12) rotate(var(--explode-rz)) !important;
-  opacity: 0 !important;
-  pointer-events: none;
-}
-
-.thought-scene.scene--resetting .bubble-wrapper {
-  opacity: 0 !important;
-  transform: scale(0.85) !important;
-  transition: none !important;
 }
 
 .bubble-wrapper {
