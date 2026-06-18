@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ThoughtBubbles } from "@/components/thought-bubbles";
+import { TypewriterTitle } from "@/components/typewriter-title";
 import { valueCards } from "@/lib/site";
 
 const promiseStats = [
@@ -39,9 +40,7 @@ export default function HomePage() {
         <div className="site-container hero-grid">
           <div className="hero-copy fade-up">
             <span className="eyebrow">Hind Jal</span>
-            <h1 className="hero-title">
-              A world without thirst should not be <span>expensive</span>.
-            </h1>
+            <TypewriterTitle />
             <p className="hero-lead">
               Hind Jal is built as a premium water brand with a simple conviction: hydration should feel trustworthy,
               accessible, and beautifully easy to buy on any screen.

@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { OrderForm } from "@/components/order-form";
+import { getProducts } from "@/lib/products";
 
 type ContactPageProps = {
-  searchParams?: {
+  searchParams: Promise<{
     product?: string | string[];
-  };
+  }>;
 };
 
 const supportCards = [
@@ -27,8 +28,10 @@ export const metadata: Metadata = {
   title: "Checkout | Hind Jal",
 };
 
-export default function ContactPage({ searchParams }: ContactPageProps) {
-  const productParam = Array.isArray(searchParams?.product) ? searchParams?.product[0] : searchParams?.product;
+export default async function ContactPage({ searchParams }: ContactPageProps) {
+  const resolvedParams = await searchParams;
+  const productParam = Array.isArray(resolvedParams?.product) ? resolvedParams?.product[0] : resolvedParams?.product;
+  const products = await getProducts();
 
   return (
     <div>
@@ -81,7 +84,7 @@ export default function ContactPage({ searchParams }: ContactPageProps) {
       </section>
 
       <section className="section section--soft">
-        <OrderForm initialProductSlug={productParam} />
+        <OrderForm initialProductSlug={productParam} products={products} />
       </section>
 
       <section className="section">

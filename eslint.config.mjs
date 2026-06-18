@@ -1,3 +1,10 @@
 import nextConfig from "eslint-config-next/core-web-vitals";
 
-export default nextConfig;
+const config = [
+	...nextConfig,
+	{
+		ignores: ["Hindjal CMS portal/**"],
+	},
+];
+
+export default config;

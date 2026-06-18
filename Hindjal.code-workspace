@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../../Downloads/stitch_aquatrust_hydration_portal"
+		}
+	],
+	"settings": {
+		"powershell.cwd": "Hindjal"
+	}
+}

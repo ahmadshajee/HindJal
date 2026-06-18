@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { formatRupees, type Product } from "@/lib/site";
+import { type Product } from "@/lib/products";
+import { formatRupees } from "@/lib/site";
 
 type ProductCardProps = {
   product: Product;
@@ -7,10 +8,21 @@ type ProductCardProps = {
 
 export function ProductCard({ product }: ProductCardProps) {
   const displayPrice = product.quoteOnly ? "Custom quote" : formatRupees(product.price);
+  const hasImage = typeof product.imageUrl === "string" && product.imageUrl.trim().length > 0;
 
   return (
     <article className="product-card fade-up" data-accent={product.accent} data-featured={product.featured ? "true" : "false"}>
       <div className="product-card__topline" />
+
+      <div className="product-card__media">
+        {hasImage ? (
+          // A plain img tag is used intentionally because CMS image hosts are fully dynamic.
+          // eslint-disable-next-line @next/next/no-img-element
+          <img alt={product.name} className="product-card__image" loading="lazy" src={product.imageUrl} />
+        ) : (
+          <div className="product-card__image-fallback" aria-hidden="true" />
+        )}
+      </div>
 
       <div className="product-card__header">
         <div>
@@ -24,8 +36,8 @@ export function ProductCard({ product }: ProductCardProps) {
       <p className="product-card__description">{product.description}</p>
 
       <ul className="product-card__specs">
-        {product.specs.map((spec) => (
-          <li key={spec}>{spec}</li>
+        {product.tags.map((tag) => (
+          <li key={tag}>{tag}</li>
         ))}
       </ul>
 

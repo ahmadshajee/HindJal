@@ -2,10 +2,12 @@
 
 import Link from "next/link";
 import { type FormEvent, useEffect, useState } from "react";
-import { formatRupees, products } from "@/lib/site";
+import { type Product } from "@/lib/products";
+import { formatRupees } from "@/lib/site";
 
 type OrderFormProps = {
   initialProductSlug?: string;
+  products: Product[];
 };
 
 type OrderStatus =
@@ -89,8 +91,8 @@ const paymentOptions: Array<{
   },
 ];
 
-export function OrderForm({ initialProductSlug }: OrderFormProps) {
-  const defaultProductSlug = products.find((product) => product.slug === initialProductSlug)?.slug ?? products[0].slug;
+export function OrderForm({ initialProductSlug, products }: OrderFormProps) {
+  const defaultProductSlug = products.find((product) => product.slug === initialProductSlug)?.slug ?? products[0]?.slug ?? "";
   const [selectedProductSlug, setSelectedProductSlug] = useState(defaultProductSlug);
   const [formState, setFormState] = useState<FormState>(initialState);
   const [status, setStatus] = useState<OrderStatus>({ type: "idle" });
@@ -100,7 +102,7 @@ export function OrderForm({ initialProductSlug }: OrderFormProps) {
   }, [defaultProductSlug]);
 
   const selectedProduct = products.find((product) => product.slug === selectedProductSlug) ?? products[0];
-  const totalAmount = selectedProduct.quoteOnly ? 0 : selectedProduct.price * formState.quantity;
+  const totalAmount = selectedProduct && !selectedProduct.quoteOnly ? selectedProduct.price * formState.quantity : 0;
 
   function updateField<K extends keyof FormState>(key: K, value: FormState[K]) {
     setFormState((current) => ({
@@ -111,6 +113,12 @@ export function OrderForm({ initialProductSlug }: OrderFormProps) {
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+
+    if (!selectedProduct) {
+      setStatus({ type: "error", message: "No products are available yet. Please add products from the CMS portal." });
+      return;
+    }
+
     setStatus({ type: "loading" });
 
     try {
@@ -162,6 +170,27 @@ export function OrderForm({ initialProductSlug }: OrderFormProps) {
         message: error instanceof Error ? error.message : "An unexpected error occurred.",
       });
     }
+  }
+
+  if (!products.length || !selectedProduct) {
+    return (
+      <div className="site-container fade-up">
+        <div className="order-panel">
+          <div className="catalog-head">
+            <span className="eyebrow">No products yet</span>
+            <h2>The catalog is empty right now.</h2>
+            <p className="order-panel__copy">
+              Add at least one product from the Hindjal CMS portal, then refresh this page to start taking orders.
+            </p>
+          </div>
+          <div className="hero-actions">
+            <Link className="primary-button" href="/products">
+              Back to catalog
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (

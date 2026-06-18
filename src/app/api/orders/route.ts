@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getDatabase } from "@/lib/mongodb";
+import { sendOrderConfirmation, sendWelcomeEmail, sendCompanyNotification } from "@/lib/email";
 
 export const runtime = "nodejs";
 
@@ -107,6 +108,21 @@ export async function POST(request: Request) {
 
     const db = await getDatabase();
     await db.collection("orders").insertOne(order);
+
+    // Send email confirmation asynchronously to the client
+    sendOrderConfirmation(order).catch((err) => {
+      console.error("Failed to send order confirmation email background task:", err);
+    });
+
+    // Send welcome email asynchronously to the client
+    sendWelcomeEmail(order.email, order.customerName).catch((err) => {
+      console.error("Failed to send welcome email background task:", err);
+    });
+
+    // Send order alert notification asynchronously to the company mail
+    sendCompanyNotification(order).catch((err) => {
+      console.error("Failed to send company notification email background task:", err);
+    });
 
     return NextResponse.json(
       {

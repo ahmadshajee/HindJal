@@ -8,7 +8,8 @@ export function SiteFooter() {
           <div className="footer-grid">
             <div className="footer-brand">
               <strong>
-                <span className="brand-mark" aria-hidden="true" />
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/logo-square.png" alt="Hind Jal Logo" className="brand-logo" width={56} height={56} />
                 Hind Jal
               </strong>
               <p>

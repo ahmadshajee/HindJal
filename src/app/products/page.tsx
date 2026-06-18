@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ProductCard } from "@/components/product-card";
-import { products } from "@/lib/site";
+import { getProducts } from "@/lib/products";
 
 const shopNotes = [
   {
@@ -17,7 +17,9 @@ const shopNotes = [
   },
 ];
 
-export default function ProductsPage() {
+export default async function ProductsPage() {
+  const products = await getProducts();
+
   return (
     <div>
       <section className="section">
