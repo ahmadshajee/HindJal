@@ -74,6 +74,16 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Please fill in all required fields." }, { status: 400 });
     }
 
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return NextResponse.json({ error: "Please enter a valid email address." }, { status: 400 });
+    }
+
+    const phoneRegex = /^\+?[0-9\s\-()]{10,20}$/;
+    if (!phoneRegex.test(mobileNumber)) {
+      return NextResponse.json({ error: "Please enter a valid mobile number." }, { status: 400 });
+    }
+
     const items = (body.items ?? []).map((item) => normalizeOrderItem(item)).filter(Boolean) as OrderItem[];
 
     if (!items.length) {

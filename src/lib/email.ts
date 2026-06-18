@@ -154,6 +154,7 @@ Hind Jal Team
         filename: "logo-fulltext.png",
         path: path.join(process.cwd(), "public/logo-fulltext.png"),
         cid: "logo_fulltext",
+        disposition: "inline",
       },
     ],
   };
@@ -380,6 +381,7 @@ The Hind Jal Team
         filename: "logo-fulltext.png",
         path: path.join(process.cwd(), "public/logo-fulltext.png"),
         cid: "logo_fulltext",
+        disposition: "inline",
       },
     ],
   };
