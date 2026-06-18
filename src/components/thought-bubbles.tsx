@@ -14,14 +14,14 @@ type Placement = {
 
 // Defined normal floating placements for each bubble card
 const placements: Placement[] = [
-  { top: "0%", left: "1%", width: "20rem", delay: "0s", className: "bubble--blue" },
-  { top: "3%", right: "1%", width: "19rem", delay: "0.25s", className: "bubble--earth" },
-  { top: "16%", left: "4%", width: "19rem", delay: "0.4s", className: "bubble--mist" },
-  { top: "20%", right: "3%", width: "18rem", delay: "0.15s", className: "bubble--blue" },
-  { top: "37%", left: "1%", width: "21rem", delay: "0.35s", className: "bubble--earth" },
-  { top: "42%", right: "2%", width: "19rem", delay: "0.55s", className: "bubble--mist" },
-  { top: "59%", left: "4%", width: "19rem", delay: "0.6s", className: "bubble--luxe" },
-  { top: "66%", right: "3%", width: "21rem", delay: "0.2s", className: "bubble--blue" },
+  { top: "4%", left: "1%", width: "21.5rem", delay: "0s", className: "bubble--blue" },
+  { top: "7%", right: "1%", width: "20.5rem", delay: "0.25s", className: "bubble--earth" },
+  { top: "19%", left: "4%", width: "20.5rem", delay: "0.4s", className: "bubble--mist" },
+  { top: "23%", right: "3%", width: "19.5rem", delay: "0.15s", className: "bubble--blue" },
+  { top: "39%", left: "1%", width: "22.5rem", delay: "0.35s", className: "bubble--earth" },
+  { top: "44%", right: "2%", width: "20.5rem", delay: "0.55s", className: "bubble--mist" },
+  { top: "60%", left: "4%", width: "20.5rem", delay: "0.6s", className: "bubble--luxe" },
+  { top: "67%", right: "3%", width: "22.5rem", delay: "0.2s", className: "bubble--blue" },
 ];
 
 export function ThoughtBubbles() {

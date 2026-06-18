@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { NavigationLink } from "./navigation-context";
 
 export function SiteFooter() {
   return (
@@ -21,9 +21,9 @@ export function SiteFooter() {
 
             <div className="footer-links">
               <p className="eyebrow">Quick links</p>
-              <Link href="/">Home</Link>
-              <Link href="/products">Product catalog</Link>
-              <Link href="/contact">Contact and orders</Link>
+              <NavigationLink href="/">Home</NavigationLink>
+              <NavigationLink href="/products">Product catalog</NavigationLink>
+              <NavigationLink href="/contact">Contact and orders</NavigationLink>
             </div>
 
             <div className="footer-links">

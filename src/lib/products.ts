@@ -232,7 +232,16 @@ async function ensureSeedData() {
   await collection.insertMany(defaultProductSeed);
 }
 
+let cachedProducts: Product[] | null = null;
+let cacheTimestamp = 0;
+const CACHE_TTL_MS = 60 * 1000; // 60 seconds TTL
+
 export async function getProducts(): Promise<Product[]> {
+  const now = Date.now();
+  if (cachedProducts && (now - cacheTimestamp < CACHE_TTL_MS)) {
+    return cachedProducts;
+  }
+
   try {
     await ensureSeedData();
     const db = await getDatabase();
@@ -243,7 +252,10 @@ export async function getProducts(): Promise<Product[]> {
       .sort({ sortOrder: 1, createdAt: 1 })
       .toArray();
 
-    return docs.map((doc) => toPublicProduct(doc as Record<string, unknown>));
+    const products = docs.map((doc) => toPublicProduct(doc as Record<string, unknown>));
+    cachedProducts = products;
+    cacheTimestamp = now;
+    return products;
   } catch (error) {
     console.error("Failed to load products from MongoDB", error);
 

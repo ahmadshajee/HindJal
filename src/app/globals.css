@@ -113,10 +113,14 @@ select {
 }
 
 main,
-header,
 footer {
   position: relative;
   z-index: 1;
+}
+
+header {
+  position: relative;
+  z-index: 100;
 }
 
 .site-container {
@@ -1256,17 +1260,19 @@ footer {
 .dock {
   position: fixed;
   left: 50%;
-  bottom: 1rem;
+  bottom: 1.5rem;
   display: none;
-  width: min(96vw, 28rem);
+  width: min(94vw, 28rem);
   transform: translateX(-50%);
   gap: 0.55rem;
   padding: 0.65rem;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.84);
-  box-shadow: 0 18px 40px rgba(0, 29, 51, 0.12);
+  background: rgba(255, 255, 255, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 18px 40px rgba(0, 29, 51, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.4);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
+  z-index: 100;
 }
 
 .dock-link {
@@ -1368,29 +1374,38 @@ footer {
 
   .hero-side,
   .thought-scene {
-    min-height: auto;
+    min-height: 38rem;
   }
 
   .thought-scene {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    padding-top: 2rem;
-    padding-bottom: 2rem;
+    position: relative;
+    padding: 0;
   }
 
   .bubble-wrapper {
-    position: relative !important;
-    top: auto !important;
-    left: auto !important;
-    right: auto !important;
-    bottom: auto !important;
-    width: 100% !important;
+    position: absolute !important;
+    width: 48.5% !important;
   }
 
   .bubble {
-    position: static;
-    width: 100% !important;
+    position: relative;
+    padding: 0.85rem 1rem !important;
+    border-radius: 1.2rem !important;
+    gap: 0.4rem !important;
+  }
+
+  .bubble:hover {
+    transform: translateY(-4px) scale(1.025) rotate(1deg);
+  }
+
+  .bubble__eyebrow {
+    font-size: 0.65rem !important;
+    letter-spacing: 0.12em !important;
+  }
+
+  .bubble__copy {
+    font-size: 0.94rem !important;
+    line-height: 1.45 !important;
   }
 
   .stat-grid,
@@ -1476,50 +1491,7 @@ footer {
   }
 }
 
-/* Global static overrides: Deactivates all animations, transitions, and hover offsets */
-*:not(.typewriter-cursor):not(.bubble-wrapper), *::before, *::after {
-  transition: none !important;
-  animation: none !important;
-}
-
-/* Cancel any hover, active, or state-based transformations */
-.primary-button:hover,
-.nav-cta:hover,
-.product-card__cta:hover,
-.dock-link:hover,
-.secondary-button:hover,
-.earth-button:hover,
-.menu-link:hover,
-.glass-card:hover,
-.glass-panel:hover,
-.summary-panel:hover,
-.product-card:hover,
-.footer-glass:hover,
-.stat-card:hover,
-.promise-card:hover,
-.support-card:hover,
-.feature-card:hover,
-.value-card:hover,
-.signature-card:hover,
-.radio-card:hover,
-.bubble:hover,
-.bubble-wrapper:hover,
-.product-card:hover .product-card__image,
-.field input:focus,
-.field select:focus,
-.field textarea:focus,
-.radio-card:has(input:checked),
-.radio-card:active {
-  transform: none !important;
-}
-
-/* Remove button hover sweep shimmer elements */
-.primary-button::after,
-.nav-cta::after,
-.product-card__cta::after,
-.earth-button::after {
-  display: none !important;
-}
+/* Animations, transitions, and hover sweeps are enabled */
 
 /* Typewriter animation styling (Whitelisted) */
 .typewriter-container {
@@ -1569,6 +1541,76 @@ body.intro-active .hero-copy > *:not(.typewriter-container) {
   filter: blur(16px) !important;
   opacity: 0.15 !important;
   pointer-events: none !important;
+}
+
+/* SPA page-view styles */
+.page-view {
+  width: 100%;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 450ms cubic-bezier(0.16, 1, 0.3, 1), transform 450ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.page-view[data-visible="true"] {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.page-view[data-visible="false"] {
+  display: none;
+}
+
+@media (max-width: 480px) {
+  .hero-side,
+  .thought-scene {
+    min-height: 32rem;
+  }
+  
+  .bubble {
+    padding: 0.7rem 0.8rem !important;
+    border-radius: 1rem !important;
+    gap: 0.3rem !important;
+  }
+
+  .bubble__eyebrow {
+    font-size: 0.58rem !important;
+    letter-spacing: 0.1em !important;
+  }
+
+  .bubble__copy {
+    font-size: 0.82rem !important;
+    line-height: 1.35 !important;
+  }
+}
+
+/* Staggered pulse-blink animations for thought bubbles 1, 4, 6 */
+.bubble-wrapper:nth-child(1) .bubble {
+  animation: pulse-blink 5.5s ease-in-out infinite;
+}
+
+.bubble-wrapper:nth-child(4) .bubble {
+  animation: pulse-blink 5.5s ease-in-out infinite;
+  animation-delay: 1.8s;
+}
+
+.bubble-wrapper:nth-child(6) .bubble {
+  animation: pulse-blink 5.5s ease-in-out infinite;
+  animation-delay: 3.6s;
+}
+
+@keyframes pulse-blink {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+    filter: brightness(1);
+  }
+  50% {
+    transform: scale(1.055) rotate(0.6deg);
+    opacity: 0.94;
+    filter: brightness(1.03);
+    border-color: rgba(68, 172, 255, 0.45);
+    box-shadow: 0 18px 36px rgba(68, 172, 255, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.95);
+  }
 }
 
 

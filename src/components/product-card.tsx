@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { NavigationLink } from "@/components/navigation-context";
 import { type Product } from "@/lib/products";
 import { formatRupees } from "@/lib/site";
 
@@ -45,9 +45,9 @@ export function ProductCard({ product }: ProductCardProps) {
         <span className="product-card__unit">
           {product.quoteOnly ? "Tailored for bulk or special orders" : "Ready for quick checkout"}
         </span>
-        <Link className="product-card__cta" href={`/contact?product=${product.slug}`}>
+        <NavigationLink className="product-card__cta" href={`/contact?product=${product.slug}`}>
           {product.ctaLabel ?? "Order now"}
-        </Link>
+        </NavigationLink>
       </div>
     </article>
   );

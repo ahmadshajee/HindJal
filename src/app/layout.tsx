@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { Manrope, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
-import { SiteFooter } from "@/components/site-footer";
-import { SiteHeader } from "@/components/site-header";
 
 const manrope = Manrope({
   subsets: ["latin"],
@@ -34,9 +32,7 @@ export default function RootLayout({
           <div aria-hidden="true" className="shell-orb shell-orb--blue" />
           <div aria-hidden="true" className="shell-orb shell-orb--earth" />
           <div aria-hidden="true" className="shell-orb shell-orb--mist" />
-          <SiteHeader />
-          <main>{children}</main>
-          <SiteFooter />
+          {children}
         </div>
       </body>
     </html>

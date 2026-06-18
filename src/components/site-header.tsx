@@ -1,9 +1,8 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { navigation } from "@/lib/site";
+import { useNavigation, NavigationLink } from "./navigation-context";
 
 function isActive(pathname: string, href: string) {
   if (href === "/") {
@@ -42,7 +41,8 @@ function CloseIcon() {
 }
 
 export function SiteHeader() {
-  const pathname = usePathname();
+  const { currentPath } = useNavigation();
+  const pathname = currentPath.split("?")[0] || "/";
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
@@ -50,15 +50,15 @@ export function SiteHeader() {
       <div className="site-container">
         <div className="glass-nav fade-up">
           <div className="nav-bar">
-            <Link className="brand" href="/" onClick={() => setMenuOpen(false)}>
+            <NavigationLink className="brand" href="/" onClick={() => setMenuOpen(false)}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src="/logo-square.png" alt="Hind Jal Logo" className="brand-logo" width={56} height={56} />
               <span>Hind Jal</span>
-            </Link>
+            </NavigationLink>
 
             <nav aria-label="Primary" className="nav-links">
               {navigation.map((item) => (
-                <Link
+                <NavigationLink
                   key={item.href}
                   aria-current={isActive(pathname, item.href) ? "page" : undefined}
                   className="nav-link"
@@ -66,17 +66,17 @@ export function SiteHeader() {
                   href={item.href}
                 >
                   {getNavigationLabel(item.href, item.label)}
-                </Link>
+                </NavigationLink>
               ))}
             </nav>
 
             <div className="nav-actions">
-              <Link className="secondary-button" href="/products">
+              <NavigationLink className="secondary-button" href="/products">
                 Explore catalog
-              </Link>
-              <Link className="nav-cta" href="/contact">
+              </NavigationLink>
+              <NavigationLink className="nav-cta" href="/contact">
                 Start order
-              </Link>
+              </NavigationLink>
             </div>
 
             <button
@@ -96,7 +96,7 @@ export function SiteHeader() {
             </p>
             <div className="menu-links">
               {navigation.map((item) => (
-                <Link
+                <NavigationLink
                   key={item.href}
                   className="menu-link"
                   data-active={isActive(pathname, item.href) ? "true" : "false"}
@@ -104,11 +104,11 @@ export function SiteHeader() {
                   onClick={() => setMenuOpen(false)}
                 >
                   {getNavigationLabel(item.href, item.label)}
-                </Link>
+                </NavigationLink>
               ))}
-              <Link className="nav-cta" href="/contact" onClick={() => setMenuOpen(false)}>
+              <NavigationLink className="nav-cta" href="/contact" onClick={() => setMenuOpen(false)}>
                 Open checkout
-              </Link>
+              </NavigationLink>
             </div>
           </div>
         </div>
@@ -116,14 +116,14 @@ export function SiteHeader() {
 
       <div aria-label="Quick navigation" className="dock">
         {navigation.map((item) => (
-          <Link
+          <NavigationLink
             key={item.href}
             className="dock-link"
             data-active={isActive(pathname, item.href) ? "true" : "false"}
             href={item.href}
           >
             {getNavigationLabel(item.href, item.label)}
-          </Link>
+          </NavigationLink>
         ))}
       </div>
     </header>
